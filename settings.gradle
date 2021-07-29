@@ -1,0 +1,2 @@
+rootProject.name = "GeekbrainsHomeworkFromLesson6"
+include ':app'
