@@ -4,9 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/notes"
-        android:name="com.example.geekbrainshomeworkfromlesson6.NotesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2" />
