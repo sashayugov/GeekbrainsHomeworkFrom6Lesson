@@ -51,7 +51,7 @@ public class NotesFragment extends Fragment {
         }
     }
 
-    private void showDetails (int index) {
+    private void showDetails(int index) {
         if (isLandscape) {
             showLandDetails(index);
         } else {
@@ -59,8 +59,8 @@ public class NotesFragment extends Fragment {
         }
     }
 
-    private void showLandDetails (int index) {
-        DetailFragment d  = DetailFragment.newInstance(index);
+    private void showLandDetails(int index) {
+        DetailFragment d = DetailFragment.newInstance(index);
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.details, d)
