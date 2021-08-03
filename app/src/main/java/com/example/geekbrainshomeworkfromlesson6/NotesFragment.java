@@ -22,7 +22,8 @@ public class NotesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_notes, container, false);
+        View view = inflater.inflate(R.layout.fragment_notes, container, false);
+        return view;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class NotesFragment extends Fragment {
         }
     }
 
-    private void showDetails (int index) {
+    private void showDetails(int index) {
         if (isLandscape) {
             showLandDetails(index);
         } else {
@@ -58,8 +59,8 @@ public class NotesFragment extends Fragment {
         }
     }
 
-    private void showLandDetails (int index) {
-        DetailFragment d  = DetailFragment.newInstance(index);
+    private void showLandDetails(int index) {
+        DetailFragment d = DetailFragment.newInstance(index);
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.details, d)
@@ -68,10 +69,13 @@ public class NotesFragment extends Fragment {
     }
 
     private void showPortDetails(int index) {
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), Details.class);
-        intent.putExtra(DetailFragment.ARG_INDEX, index);
-        startActivity(intent);
+        DetailFragment d = DetailFragment.newInstance(index);
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.notes, d)
+                .commit();
     }
 }
 
