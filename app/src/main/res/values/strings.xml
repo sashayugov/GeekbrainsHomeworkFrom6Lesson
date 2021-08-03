@@ -7,4 +7,9 @@
     <string name="add">add</string>
     <string name="delete">delete</string>
     <string name="edit">edit</string>
+
+    <string name="shopping_list">Shopping list</string>
+    <string name="travel">Travel</string>
+    <string name="todo">Todo</string>
+    <string name="note">note</string>
 </resources>
