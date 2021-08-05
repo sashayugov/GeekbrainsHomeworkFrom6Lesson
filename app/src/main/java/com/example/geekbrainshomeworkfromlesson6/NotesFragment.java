@@ -1,19 +1,17 @@
 package com.example.geekbrainshomeworkfromlesson6;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class NotesFragment extends Fragment {
 
@@ -38,17 +36,13 @@ public class NotesFragment extends Fragment {
     }
 
     private void initList(View view) {
-        LinearLayout layoutView = (LinearLayout) view;
-        String[] notes = getResources().getStringArray(R.array.notes);
-        for (int i = 0; i < notes.length; i++) {
-            String note = notes[i];
-            TextView textView = new TextView(getContext());
-            textView.setText(note);
-            textView.setTextSize(25);
-            layoutView.addView(textView);
-            final int fi = i;
-            textView.setOnClickListener(v -> showDetails(fi));
-        }
+        RecyclerView recyclerView = requireView().findViewById(R.id.recycler_notes);
+        CardSource cardSource = new CardSourceImpl(this.getContext());
+        NotesAdapter notesAdapter = new NotesAdapter(cardSource);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(notesAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        notesAdapter.setListener(this::showDetails);
     }
 
     private void showDetails(int index) {
@@ -77,6 +71,8 @@ public class NotesFragment extends Fragment {
                 .replace(R.id.notes, d)
                 .commit();
     }
+
+
 }
 
 
