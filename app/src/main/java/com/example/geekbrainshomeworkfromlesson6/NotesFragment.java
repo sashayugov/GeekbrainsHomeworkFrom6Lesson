@@ -13,9 +13,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 public class NotesFragment extends Fragment {
 
     private boolean isLandscape;
+    CardSource cardSource;
+    NotesAdapter notesAdapter;
+    RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,9 +40,9 @@ public class NotesFragment extends Fragment {
     }
 
     private void initList(View view) {
-        RecyclerView recyclerView = requireView().findViewById(R.id.recycler_notes);
-        CardSource cardSource = new CardSourceImpl(this.getContext());
-        NotesAdapter notesAdapter = new NotesAdapter(cardSource);
+        recyclerView = requireView().findViewById(R.id.recycler_notes);
+        cardSource = new CardSourceImpl(this.getContext());
+        notesAdapter = new NotesAdapter(cardSource);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(notesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));

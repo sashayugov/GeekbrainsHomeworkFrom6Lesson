@@ -8,8 +8,17 @@
     <string name="delete">delete</string>
     <string name="edit">edit</string>
 
-    <string name="shopping_list">Shopping list</string>
-    <string name="travel">Travel</string>
-    <string name="todo">Todo</string>
-    <string name="note">note</string>
+    <string name="shopping_list_note">Shopping list</string>
+    <string name="shopping_list_detail">milk, bread, eggs</string>
+
+    <string name="travel_note">Travel</string>
+    <string name="travel_detail">hotel booking, make a vise, exchange money</string>
+
+    <string name="todo_note">Todo</string>
+    <string name="todo_detail">fix the bike, vaccinate a cat</string>
+
+    <string name="note_note">note</string>
+    <string name="note_detail">detail</string>
+    <string name="update">update</string>
+
 </resources>

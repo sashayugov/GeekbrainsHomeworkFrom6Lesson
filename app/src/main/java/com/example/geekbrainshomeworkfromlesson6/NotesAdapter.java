@@ -11,11 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHolder> {
 
-    private CardSource dataSource;
-
-    public CardSource getDataSource() {
-        return dataSource;
-    }
+    private final CardSource dataSource;
 
     private OnNoteClickListener listener;
 

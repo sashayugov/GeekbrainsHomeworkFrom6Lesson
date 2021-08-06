@@ -1,14 +1,20 @@
 package com.example.geekbrainshomeworkfromlesson6;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
+
+    NotesFragment notesFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        NotesFragment notesFragment = new NotesFragment();
+        notesFragment = new NotesFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.notes, notesFragment)
@@ -32,9 +38,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
+        switch (item.getItemId()) {
             case R.id.action_search:
                 Toast toast1 = Toast.makeText(getApplicationContext(),
                         "Soon we will be search...", Toast.LENGTH_SHORT);
@@ -46,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 toast2.show();
                 return true;
             case R.id.action_add:
-                Toast toast3 = Toast.makeText(getApplicationContext(),
-                        "Add new note later...", Toast.LENGTH_SHORT);
-                toast3.show();
+                notesFragment.cardSource.addCardData(new CardData("Note", "Details"));
+                notesFragment.notesAdapter.notifyItemInserted(notesFragment.cardSource.size() - 1);
+                notesFragment.recyclerView.scrollToPosition(notesFragment.cardSource.size() - 1);
                 return true;
             case R.id.action_edit:
                 Toast toast4 = Toast.makeText(getApplicationContext(),
@@ -56,9 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 toast4.show();
                 return true;
             case R.id.action_delete:
-                Toast toast5 = Toast.makeText(getApplicationContext(),
-                        "Delete note later...", Toast.LENGTH_SHORT);
-                toast5.show();
+                notesFragment.cardSource.clearCardData();
+                notesFragment.notesAdapter.notifyDataSetChanged();
                 return true;
         }
         return super.onOptionsItemSelected(item);
