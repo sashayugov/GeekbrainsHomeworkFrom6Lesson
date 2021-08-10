@@ -2,7 +2,10 @@ package com.example.geekbrainshomeworkfromlesson6;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,9 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NotesFragment extends Fragment {
 
     private boolean isLandscape;
-    CardSource cardSource;
-    NotesAdapter notesAdapter;
-    RecyclerView recyclerView;
+    private CardSource cardSource;
+    private NotesAdapter notesAdapter;
+    private RecyclerView recyclerView;
+    private int currentPosition = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,15 +41,18 @@ public class NotesFragment extends Fragment {
             showLandDetails(0);
         }
         initList(view);
+        view.showContextMenu();
+        registerForContextMenu(recyclerView);
     }
 
     private void initList(View view) {
         recyclerView = requireView().findViewById(R.id.recycler_notes);
-        cardSource = new CardSourceImpl(this.getContext());
+        cardSource = new CardSourceImpl(this.requireContext());
         notesAdapter = new NotesAdapter(cardSource);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(notesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        notesAdapter.setLongListener(position -> currentPosition = position);
         notesAdapter.setListener(this::showDetails);
     }
 
@@ -76,8 +83,40 @@ public class NotesFragment extends Fragment {
                 .commit();
     }
 
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v,
+                                    @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater mInflater = requireActivity().getMenuInflater();
+        mInflater.inflate(R.menu.card_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_update:
+                cardSource.updateCardData(currentPosition, new CardData("Note", "Details"));
+                notesAdapter.notifyItemChanged(currentPosition);
+                return true;
+            case R.id.action_delete:
+                cardSource.deleteCardData(currentPosition);
+                notesAdapter.notifyItemRemoved(currentPosition);
+                return true;
+        }
+
+        return super.onContextItemSelected(item);
+    }
+
+    public void addNote() {
+        cardSource.addCardData(new CardData("note", "details"));
+        notesAdapter.notifyItemInserted(cardSource.size() - 1);
+        recyclerView.scrollToPosition(cardSource.size() - 1);
+    }
+
+    public void clearAllNotes() {
+        cardSource.clearCardData();
+        notesAdapter.notifyDataSetChanged();
+    }
 
 }
-
-
 

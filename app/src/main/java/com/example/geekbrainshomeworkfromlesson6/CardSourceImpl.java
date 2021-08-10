@@ -2,41 +2,61 @@ package com.example.geekbrainshomeworkfromlesson6;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CardSourceImpl implements CardSource {
 
-    private Context context;
+    private static List<CardData> cards;
 
     public CardSourceImpl(Context context) {
-        this.context = context;
+        cards = new ArrayList<>(Arrays.asList(
+                new CardData(
+                        context.getString(R.string.shopping_list_note),
+                        context.getString(R.string.shopping_list_detail)
+                ),
+                new CardData(
+                        context.getString(R.string.travel_note),
+                        context.getString(R.string.travel_detail)
+
+                ),
+                new CardData(
+                        context.getString(R.string.todo_note),
+                        context.getString(R.string.todo_detail)
+                )
+        ));
+
+
     }
 
     @Override
     public CardData getCardData(int position) {
-        return DataProvider.getData(context.getResources()).get(position);
+        return cards.get(position);
     }
 
     @Override
     public void deleteCardData(int position) {
-        DataProvider.getData(context.getResources()).remove(position);
+        cards.remove(position);
     }
 
     @Override
     public void updateCardData(int position, CardData cardData) {
-        DataProvider.getData(context.getResources()).set(position, cardData);
+        cards.set(position, cardData);
     }
 
     @Override
     public void addCardData(CardData cardData) {
-        DataProvider.getData(context.getResources()).add(cardData);
+        cards.add(cardData);
     }
 
     @Override
     public void clearCardData() {
-        DataProvider.getData(context.getResources()).clear();
+        cards.clear();
     }
 
     @Override
     public int size() {
-        return DataProvider.getData(context.getResources()).size();
+        return cards.size();
     }
 }

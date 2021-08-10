@@ -12,17 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHolder> {
 
     private final CardSource dataSource;
-
     private OnNoteClickListener listener;
+    private OnNoteClickListener longListener;
 
     public void setListener(@Nullable OnNoteClickListener listener) {
         this.listener = listener;
     }
 
+    public void setLongListener(@Nullable OnNoteClickListener longListener) {
+        this.longListener = longListener;
+    }
+
     public NotesAdapter(CardSource dataSource) {
         this.dataSource = dataSource;
     }
-
 
     @NonNull
     @Override
@@ -51,7 +54,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             note.setOnClickListener(v -> {
                 listener.onNoteClick(getAdapterPosition());
             });
-
+            note.setOnLongClickListener(v -> {
+                longListener.onNoteClick(getAdapterPosition());
+                return false;
+            });
         }
 
         public void bind(CardData cardData) {

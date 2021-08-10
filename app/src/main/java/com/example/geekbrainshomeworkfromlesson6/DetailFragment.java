@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 public class DetailFragment extends Fragment {
 
 
@@ -40,10 +42,9 @@ public class DetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         TextView textView = view.findViewById(R.id.text);
-        String detailText = DataProvider.getData(requireContext()
-                .getResources())
-                .get(index)
-                .getDetail();
+        CardSource cardSource = new CardSourceImpl(this.requireContext());
+        CardData cardData = cardSource.getCardData(index);
+        String detailText = cardData.getDetail();
         textView.setText(detailText);
         textView.setTextSize(20);
         return view;
