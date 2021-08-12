@@ -1,35 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="notes">
-        <item>Shopping List</item>
-        <item>Travel</item>
-        <item>Todo</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>Todo</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-        <item>note</item>
-    </string-array>
 
-    <string-array name="detail">
-        <item>milk, bread, eggs</item>
-        <item>hotel booking, make a vise, exchange money</item>
-        <item>fix the bike, vaccinate a cat</item>
-    </string-array>
 </resources>
