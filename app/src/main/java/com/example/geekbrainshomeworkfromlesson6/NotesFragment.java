@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.UUID;
+
 
 public class NotesFragment extends Fragment {
 
@@ -47,7 +49,8 @@ public class NotesFragment extends Fragment {
 
     private void initList(View view) {
         recyclerView = requireView().findViewById(R.id.recycler_notes);
-        cardSource = new CardSourceImpl(this.requireContext());
+        cardSource = new CardSourceFirebaseImpl();
+        cardSource.init(cardSource -> notesAdapter.notifyDataSetChanged());
         notesAdapter = new NotesAdapter(cardSource);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(notesAdapter);
@@ -95,7 +98,9 @@ public class NotesFragment extends Fragment {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_update:
-                cardSource.updateCardData(currentPosition, new CardData("Note", "Details"));
+                CardData cardData = new CardData("Note", "Details");
+                cardData.setId(cardSource.getCardData(currentPosition).getId());
+                cardSource.updateCardData(currentPosition, cardData);
                 notesAdapter.notifyItemChanged(currentPosition);
                 return true;
             case R.id.action_delete:
@@ -108,7 +113,9 @@ public class NotesFragment extends Fragment {
     }
 
     public void addNote() {
-        cardSource.addCardData(new CardData("note", "details"));
+        CardData cardData = new CardData("note", "details");
+        cardData.setId(UUID.randomUUID().toString());
+        cardSource.addCardData(cardData);
         notesAdapter.notifyItemInserted(cardSource.size() - 1);
         recyclerView.scrollToPosition(cardSource.size() - 1);
     }
