@@ -20,5 +20,10 @@
     <string name="note_note">note</string>
     <string name="note_detail">detail</string>
     <string name="update">update</string>
+    <string name="Attention">Attention!</string>
+    <string name="MessageClearAll">Delete all notes?</string>
+    <string name="Ok">Ok</string>
+    <string name="Cancel">Cancel</string>
+    <string name="DeleteNote">Delete note?</string>
 
 </resources>
