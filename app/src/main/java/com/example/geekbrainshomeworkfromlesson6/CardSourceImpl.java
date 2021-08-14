@@ -8,9 +8,18 @@ import java.util.List;
 
 public class CardSourceImpl implements CardSource {
 
+    private Context context;
     private static List<CardData> cards;
 
     public CardSourceImpl(Context context) {
+        this.context = context;
+
+
+
+    }
+
+    @Override
+    public CardSource init(CardSourceResponse response) {
         cards = new ArrayList<>(Arrays.asList(
                 new CardData(
                         context.getString(R.string.shopping_list_note),
@@ -27,7 +36,13 @@ public class CardSourceImpl implements CardSource {
                 )
         ));
 
+        if (response != null) {
+            response.initialized(this);
+        }
 
+
+
+        return this;
     }
 
     @Override

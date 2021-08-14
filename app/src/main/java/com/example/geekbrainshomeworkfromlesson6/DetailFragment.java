@@ -42,7 +42,7 @@ public class DetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         TextView textView = view.findViewById(R.id.text);
-        CardSource cardSource = new CardSourceImpl(this.requireContext());
+        CardSource cardSource = new CardSourceFirebaseImpl();
         CardData cardData = cardSource.getCardData(index);
         String detailText = cardData.getDetail();
         textView.setText(detailText);
