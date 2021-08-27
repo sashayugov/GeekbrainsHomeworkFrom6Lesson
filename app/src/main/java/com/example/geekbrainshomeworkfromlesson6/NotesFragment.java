@@ -1,5 +1,7 @@
 package com.example.geekbrainshomeworkfromlesson6;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -104,8 +106,18 @@ public class NotesFragment extends Fragment {
                 notesAdapter.notifyItemChanged(currentPosition);
                 return true;
             case R.id.action_delete:
-                cardSource.deleteCardData(currentPosition);
-                notesAdapter.notifyItemRemoved(currentPosition);
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setTitle(R.string.Attention)
+                        .setMessage(R.string.DeleteNote)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.Ok, (dialog, which) -> {
+                            cardSource.deleteCardData(currentPosition);
+                            notesAdapter.notifyItemRemoved(currentPosition);
+                        })
+                        .setNegativeButton(getString(R.string.Cancel), null)
+                        .show();
+
+
                 return true;
         }
 
@@ -121,9 +133,16 @@ public class NotesFragment extends Fragment {
     }
 
     public void clearAllNotes() {
-        cardSource.clearCardData();
-        notesAdapter.notifyDataSetChanged();
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle(R.string.Attention)
+                .setMessage(R.string.MessageClearAll)
+                .setCancelable(false)
+                .setPositiveButton(R.string.Ok, (dialog, which) -> {
+                    cardSource.clearCardData();
+                    notesAdapter.notifyDataSetChanged();
+                })
+                .setNegativeButton(getString(R.string.Cancel), null)
+                .show();
     }
-
 }
 
